@@ -146,7 +146,7 @@ def loops_4():
     for j in range(10):
         row = []
         for i in range(10):
-            row.append(str(i + 1 -1))
+            row.append(str(i))
         array.append(row)
     return array 
 
@@ -233,7 +233,9 @@ def loops_7():
     This is a hard problem. Use lots of experimentation and draw
     lots of diagrams!
     """
-    return None
+    pyramid = []
+    for row in range(9):
+        if 
 
 
 def little_printer(some_kind_of_list, exercise_name):
