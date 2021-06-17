@@ -239,7 +239,7 @@ def loops_7():
     for x in range(height): #while the pyramid is not a 'height' amount of layers, keep printing in pyramid shape
         row = []
         for y in range(width): #while the pyramid is not at its base length of 'width', keep printing stars
-            if abs(y - 4) <= x:
+            if abs(y - width//2) <= x:
                 row.append("*")
             else:
                 row.append(" ")
