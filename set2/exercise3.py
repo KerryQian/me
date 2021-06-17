@@ -176,10 +176,10 @@ def loops_5():
     you'll come to see the pros and cons of each over time.
     """
     array = []
-    for j in range(10):
+    for i in range(10):
         row = []
-        for i in range(10):
-            row.append("(i" + str(j) + ", j" + str(i) + "), ")
+        for j in range(5):
+            row.append("(i" + str(i) + ", j" + str(j) + ")")
         array.append(row)
     return array 
 
@@ -208,7 +208,8 @@ def loops_6():
     for j in range(10):
         row = []
         for i in range(j + 1):
-            row.append(i)
+            row.append(str(i))
+            print(", ")
         array.append(row)
     return array
 
@@ -239,10 +240,10 @@ def loops_7():
     for x in range(height): #while the pyramid is not a 'height' amount of layers, keep printing in pyramid shape
         row = []
         for y in range(width): #while the pyramid is not at its base length of 'width', keep printing stars
-            if abs(y - width//2) <= x:
-                row.append("*")
+            if abs(y - width//2) <= x: #a formula to creating a triangle 
+                row.append('*')
             else:
-                row.append(" ")
+                row.append(' ')
         pyramid.append(row)
     return pyramid
 
