@@ -234,9 +234,17 @@ def loops_7():
     lots of diagrams!
     """
     pyramid = []
-    for row in range(9):
-        if 
-
+    width = 9
+    height = 5
+    for x in range(height): #while the pyramid is not a 'height' amount of layers, keep printing in pyramid shape
+        row = []
+        for y in range(width): #while the pyramid is not at its base length of 'width', keep printing stars
+            if abs(y - 4) <= x:
+                row.append("*")
+            else:
+                row.append(" ")
+        pyramid.append(row)
+    return pyramid
 
 def little_printer(some_kind_of_list, exercise_name):
     """Help to see what's going on.
