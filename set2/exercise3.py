@@ -209,7 +209,6 @@ def loops_6():
         row = []
         for i in range(j + 1):
             row.append(str(i))
-            print(", ")
         array.append(row)
     return array
 
