@@ -33,7 +33,7 @@ def binary_search(low, high, actual_number):
         print(guess)
         if (guess == actual_number):
             tries = tries + 1
-            return {"guess": guess, "tries": tries}
+            break
         elif (guess < actual_number):
             low = guess + 1
             tries = tries + 1
