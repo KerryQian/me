@@ -2,9 +2,25 @@
 
 Steps on the way to making your own guessing game.
 """
+def not_number_rejector(message):
+    """Ask for a number repeatedly until actually given one.
 
+    Ask for a number, and if the response is actually NOT a number
+    (e.g. "cow", "six", "8!") then throw it out and ask for an actual number.
+    When you do get a number, return it.
+    """
+    while True:
+        try:
+            x = int(input(message))
+        except TypeError:
+            print ("Please try again")
+            continue
+        except ValueError:
+            print("Please try again")
+            continue
+        else:
+            return x
 import random
-
 
 def advancedGuessingGame():
     """Play a guessing game with a user.
@@ -25,8 +41,38 @@ def advancedGuessingGame():
     Remember to think modular. Try to keep your functions small and single
     purpose if you can!
     """
+    print("\nWelcome to the guessing game!")
+    print("A number between _ and _ ?")
+    lowerBound = not_number_rejector("Enter a lower bound: ")
+    upperBound = not_number_rejector("Enter an upper bound: ")
+    print("OK then, a number between {} and {} ?".format(lowerBound, upperBound))
+    upperBound = int(upperBound)
+    lowerBound = int(lowerBound)
 
-    return "You got it!"
+    actualNumber = random.randint(lowerBound, upperBound)
+
+    guessed = False
+
+    while not guessed:
+      try:
+        guessedNumber = int(input("Guess a number: "))
+        print("You guessed {},".format(guessedNumber),)
+        if guessedNumber == actualNumber:
+            print("You got it!! It was {}".format(actualNumber))
+            guessed = True
+        elif guessedNumber < actualNumber:
+            print("Too small, try again :'(")
+        else:
+            print("Too big, try again :'(")
+      except TypeError:
+            print ("Please try again")
+            continue
+      except ValueError:
+          print("Please try again")
+          continue
+      else:
+        return "You got it!"
+    
     # the tests are looking for the exact string "You got it!". Don't modify that!
 
 
