@@ -54,24 +54,24 @@ def advancedGuessingGame():
     guessed = False
 
     while not guessed:
-      try:
-        guessedNumber = int(input("Guess a number: "))
-        print("You guessed {},".format(guessedNumber),)
-        if guessedNumber == actualNumber:
-            print("You got it!! It was {}".format(actualNumber))
-            guessed = True
-        elif guessedNumber < actualNumber:
-            print("Too small, try again :'(")
-        else:
-            print("Too big, try again :'(")
-      except TypeError:
+        try:
+            guessedNumber = int(input("Guess a number: "))
+            print("You guessed {},".format(guessedNumber),)
+            if guessedNumber == actualNumber:
+                print("You got it!! It was {}".format(actualNumber))
+                guessed = True
+            elif guessedNumber < actualNumber:
+                print("Too small, try again :'(")
+            else:
+                print("Too big, try again :'(")
+        except TypeError:
             print ("Please try again")
             continue
-      except ValueError:
-          print("Please try again")
-          continue
-      else:
-        return "You got it!"
+        except ValueError:
+            print("Please try again")
+            continue
+        else:
+            return "You got it!"
     
     # the tests are looking for the exact string "You got it!". Don't modify that!
 
