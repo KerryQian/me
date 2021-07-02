@@ -7,6 +7,8 @@ import requests
 import inspect
 import sys
 
+from requests.models import Response
+
 # Handy constants
 LOCAL = os.path.dirname(os.path.realpath(__file__))  # the context of this file
 CWD = os.getcwd()  # The curent working directory
@@ -36,7 +38,11 @@ def get_some_details():
     json_data = open(LOCAL + "/lazyduck.json").read()
 
     data = json.loads(json_data)
-    return {"lastName": None, "password": None, "postcodePlusID": None}
+    last = data["results"][0]["name"]["last"]
+    password = data["results"][0]["login"]["password"]
+    postcode = data["results"][0]["location"]["postcode"]
+    id = int(data["results"][0]["id"]["value"])
+    return {"lastName": last, "password": password, "postcodePlusID": postcode + id}
 
 
 def wordy_pyramid():
@@ -73,17 +79,37 @@ def wordy_pyramid():
     ]
     TIP: to add an argument to a URL, use: ?argName=argVal e.g. &wordlength=
     """
-    pass
+
+    pyramid = []
+    for x in range(3, 20, 2):  # first loop to make triangle
+        url = (
+            "https://us-central1-waldenpondpress.cloudfunctions.net/"
+            "give_me_a_word?"
+            f"wordlength={x}"
+        )
+        r = requests.get(url)
+        word = r.text
+        pyramid.append(word)
+    for x in range(20, 3, -2):  # first loop but flipped
+        url = (
+            "https://us-central1-waldenpondpress.cloudfunctions.net/"
+            "give_me_a_word?"
+            f"wordlength={x}"
+        )
+        r = requests.get(url)
+        word = r.text
+        pyramid.append(word)
+    return pyramid
 
 
 def pokedex(low=1, high=5):
-    """ Return the name, height and weight of the tallest pokemon in the range low to high.
+    """Return the name, height and weight of the tallest pokemon in the range low to high.
 
     Low and high are the range of pokemon ids to search between.
     Using the Pokemon API: https://pokeapi.co get some JSON using the request library
     (a working example is filled in below).
     Parse the json and extract the values needed.
-    
+
     TIP: reading json can someimes be a bit confusing. Use a tool like
          http://www.jsoneditoronline.org/ to help you see what's going on.
     TIP: these long json accessors base["thing"]["otherThing"] and so on, can
@@ -91,12 +117,25 @@ def pokedex(low=1, high=5):
          variable and then future access will be easier.
     """
     template = "https://pokeapi.co/api/v2/pokemon/{id}"
-
-    url = template.format(id=5)
-    r = requests.get(url)
-    if r.status_code is 200:
-        the_json = json.loads(r.text)
-    return {"name": None, "weight": None, "height": None}
+    pokemon = []
+    for p in range(low, high):
+        url = template.format(id=p)
+        r = requests.get(url)
+        if r.status_code is 200:
+            the_json = json.loads(r.text)
+            pokemon.append(the_json)
+        tallest = 0
+        current_tallest = "num"
+        for p in pokemon:
+            height = p["height"]
+            if height > tallest:
+                tallest = height
+                current_tallest = p
+    return {
+        "name": current_tallest["name"],
+        "weight": current_tallest["weight"],
+        "height": current_tallest["height"],
+    }
 
 
 def diarist():
@@ -113,7 +152,21 @@ def diarist():
          the test will have nothing to look at.
     TIP: this might come in handy if you need to hack a 3d print file in the future.
     """
-    pass
+
+    counter = 0
+    mode = "r"
+    with open("set4/Trispokedovetiles(laser).gcode", mode, encoding="utf-8") as gc:
+        gcode = gc.readlines()
+        for line in gcode:
+            if "M10" in line:
+                counter = counter + 1
+
+    mode = "w"
+    with open("set4/lasers.pew", mode, encoding="utf-8") as s:
+        script = s.write(str(counter))
+        for line in script:
+            print(script)
+        return script
 
 
 if __name__ == "__main__":
