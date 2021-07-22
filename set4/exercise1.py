@@ -37,12 +37,20 @@ def get_some_details():
     """
     json_data = open(LOCAL + "/lazyduck.json").read()
 
-    data = json.loads(json_data)
-    last = data["results"][0]["name"]["last"]
+    data = json.loads(
+        json_data
+    )  # loading data from the json_data variable defined above
+    last = data["results"][0]["name"][
+        "last"
+    ]  # use the debugger to fine the filepath of important information
     password = data["results"][0]["login"]["password"]
     postcode = data["results"][0]["location"]["postcode"]
     id = int(data["results"][0]["id"]["value"])
-    return {"lastName": last, "password": password, "postcodePlusID": postcode + id}
+    return {
+        "lastName": last,
+        "password": password,
+        "postcodePlusID": postcode + id,
+    }  # print answers
 
 
 def wordy_pyramid():
@@ -85,10 +93,11 @@ def wordy_pyramid():
         url = (
             "https://us-central1-waldenpondpress.cloudfunctions.net/"
             "give_me_a_word?"
-            f"wordlength={x}"
+            f"wordlength={x}"  # first half of this url is a normal string. wordlength is an fstring because we need
+            # to constanly change that value of x which fstring is easily able to do
         )
-        r = requests.get(url)
-        word = r.text
+        r = requests.get(url)  # goes to the url
+        word = r.text  # stores the text in the url as "word"
         pyramid.append(word)
     for x in range(20, 3, -2):  # first loop but flipped
         url = (
@@ -116,13 +125,19 @@ def pokedex(low=1, high=5):
          get very long. If you are accessing a thing often, assign it to a
          variable and then future access will be easier.
     """
-    template = "https://pokeapi.co/api/v2/pokemon/{id}"
+    template = "https://pokeapi.co/api/v2/pokemon/{id}"  # id is in a string to be  easily changed. link is inside
+    # a variable called "template"
     pokemon = []
     for p in range(low, high):
-        url = template.format(id=p)
+        url = template.format(
+            id=p
+        )  # url is now the link in template + the id that is changes every time this loop runs
         r = requests.get(url)
-        if r.status_code is 200:
-            the_json = json.loads(r.text)
+        if (
+            r.status_code is 200
+        ):  # make a request to the url and return the status code as 'integer'.status_code.
+            # (more about status codes in readme.md)
+            the_json = json.loads(r.text)  # parses a json string using json.loads()
             pokemon.append(the_json)
         tallest = 0
         current_tallest = "num"
@@ -154,17 +169,28 @@ def diarist():
     """
 
     counter = 0
-    mode = "r"
+    mode = "r"  # read mode
     with open("set4/Trispokedovetiles(laser).gcode", mode, encoding="utf-8") as gc:
-        gcode = gc.readlines()
+        # opening with the "with" command opens and closes the file after it is done
+        gcode = (
+            gc.readlines()
+        )  # reading the lines one by one using .readlines() command
         for line in gcode:
             if "M10" in line:
                 counter = counter + 1
+        # if the string "M10" is in the line, add 1 to the counter
 
-    mode = "w"
+    mode = "w"  # write mode
     with open("set4/lasers.pew", mode, encoding="utf-8") as s:
-        script = s.write(str(counter))
-        for line in script:
+        # tries to open a file, however file does not exist so a new file is created
+        script = s.write(
+            str(counter)
+        )  # writing the counter into the file using .write()
+        for (
+            line
+        ) in (
+            script
+        ):  # printing the counter which is stored as a string in integer "script"
             print(script)
         return script
 
