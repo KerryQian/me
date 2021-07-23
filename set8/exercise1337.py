@@ -134,9 +134,9 @@ def set_it_on_fire(input_string="very naughty boy") -> str:
     TIP: consider using the 'join' method in Python.
     TIP: make sure that you have a 🔥 on both ends of the string.
     """
-    # fmt: off
-    sentence = list(input_string.upper())  # instert word into a list and make the letters uppercase
-    # fmt: on
+    sentence = list(
+        input_string.upper()
+    )  # instert word into a list and make the letters uppercase
     fire = "🔥".join(sentence)  # add the emoji in between every letter
     return "🔥" + fire + "🔥"  # add the emoji at the beggining and end
 
